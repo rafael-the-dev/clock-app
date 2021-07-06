@@ -1,0 +1,154 @@
+.home  {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/mobile/bg-image-daytime.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+    padding-top: 2rem;
+}
+
+.home--evening {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/mobile/bg-image-nighttime.jpg');
+}
+
+.home--justify-end {
+    justify-content: flex-end;
+}
+
+.px-5 {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.home__intro--display {
+    display: none;
+}
+
+.home__quote-container {
+    width: 83%;
+}
+
+.home__quote {
+    font-size: .9rem;
+    line-height: 1.5rem;
+}
+
+.home__quote-author {
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.home__refresh-button-container {
+    width: 7%;
+}
+
+.home__refresh-button {
+    background-image: url('../../assets/images/icon-refresh.svg');
+    border-radius: 50%;
+    height: 40px;
+    width: 100%;
+}
+
+.home__highlight {
+    padding-bottom: 3rem;
+}
+
+.home__greeting {
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 5px;
+    opacity: 0.7;
+}
+
+.home__greeting--icon {
+    background-image: url('../../assets/images/icon-sun.svg');
+    border-radius: 50%;
+    height: 30px;
+    margin-right: 10px;
+    width: 30px;
+}
+
+.home__greeting--evening {
+    background-image: url('../../assets/images/icon-moon.svg');
+}
+
+.home__time {
+    font-size: 5.7rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.home__time--sub {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-left: 10px;
+}
+
+.home__more-button {
+    margin-top: 2rem;
+    border-radius: 19px;
+    letter-spacing: 2px;
+    padding: .2rem .2rem .25rem .7rem;
+}
+
+.home__more-button-icon {
+    background-image: url('../../assets/images/icon-arrow-up.svg');
+    background-color: #000;
+    border-radius: 50%;
+    height: 30px;
+    margin-left: 10px;
+    transform: rotate(180deg);
+    width: 30px;
+}
+
+.home__more-button-icon--rotate {
+    transform: rotate(0);
+}
+
+.home__location {
+    background-color: #fff;
+    color: #000;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.home__location--display {
+    display: flex;
+}
+
+@media screen and (min-width: 501px) {
+    .home {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/tablet/bg-image-daytime.jpg');
+    }
+
+    .home--desktop-evening {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/tablet/bg-image-nighttime.jpg');
+    }
+
+    .home__intro {
+        margin-bottom: 2rem;
+    }
+
+    .home__location--display {
+        display: grid;
+        grid-template-columns: 45% 45%;
+        padding: 5rem 5%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .home {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/desktop/bg-image-daytime.jpg');
+    }
+
+    .home--desktop-evening {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/desktop/bg-image-nighttime.jpg');
+    }
+
+    .home__highlight {
+        align-items: flex-end;
+        flex-direction: row;
+    }
+}
+
