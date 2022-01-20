@@ -85,7 +85,7 @@ const Home = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             let date = new Date();
-            timerRef.current.innerHTML = `${date.getHours()}:${date.getMinutes()}`;
+            timerRef.current.innerHTML = `${date.getHours()}:${date.getMinutes() < 10 ? 0 : ''}${date.getMinutes()}`;
 
             if(homeRef.current) {
                 if(hourRef.current !== date.getHours()) {
