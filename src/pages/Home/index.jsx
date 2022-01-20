@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ContentGroup from '../../components/ContentGroup';
 import './styles.css';
 
@@ -34,15 +34,8 @@ const Home = () => {
     const homeLocationRef = useRef(null);
     const homeIntroRef = useRef(null);
     const homeMoreButtonIcon = useRef(null);
-    //const homeGreetingIconRef = useRef(null);
-
-    /*const memorizedValue = useMemo(() => {
-        return quotes[index].author;
-    }, [ index, quotes ]);
-
-    const memorizedDescription = useMemo(() => {
-        return quotes[index].content;
-    }, [ index, quotes ]); */
+    const timerRef = useRef(null);
+    const homeGreetingIconRef = useRef(null);
 
     const memorizedCurrentTime = useMemo(() => {
         return currentTime;
@@ -72,62 +65,50 @@ const Home = () => {
         homeRef.current.classList.toggle('home--justify-end');
     };
 
-    const getGreetingText = () => {
+    const greetingTextRef = useRef(null);
+    const getGreetingText = useCallback((hours) => {
         let greetingText = "";
 
-        if(memorizedCurrentTime.date) {
-            if(memorizedCurrentTime.date.getHours() >= 18) {
-                greetingText="Good Evening"
-            } else if((memorizedCurrentTime.date.getHours() >= 12) && (memorizedCurrentTime.date.getHours() < 18)) {
-                greetingText="Good afternoon"
-            } else {
-                greetingText="Good Morning"
-            }
-        } 
-
-        return greetingText;
-    };
-
-    const getTime = () => {
-        let time = "";
-
-        if(memorizedCurrentTime.date) {
-            time = `${memorizedCurrentTime.date.getHours() + 1}:${memorizedCurrentTime.date.getMinutes()}`;
-        } 
-
-        return time;
-    };
-
-    const getGreetingIconClass = () => {
-        let iconClass = "";
-
-        if(memorizedCurrentTime.date) {
-            if(memorizedCurrentTime.date.getHours() >= 18) {
-                iconClass = "home__greeting--evening";
-            }
+        if(hours >= 18 && hours <= 23) {
+            greetingText="Good Evening"
+        } else if((hours >= 12) && (hours < 18)) {
+            greetingText="Good afternoon"
+        } else {
+            greetingText="Good Morning"
         }
-        
-        return iconClass;
-    };
 
+        greetingTextRef.current.innerHTML = greetingText;
+    }, []);
 
-    const getBackgroundImageClass = () => {
-        let backgroundImageClass = "";
+    const timeRef = useRef('a');
+    const hourRef = useRef(0);
+    useEffect(() => {
+        const timer = setInterval(() => {
+            let date = new Date();
+            timerRef.current.innerHTML = `${date.getHours()}:${date.getMinutes()}`;
 
-        if(memorizedCurrentTime.date)
-            if(memorizedCurrentTime.date.getHours() >= 18) {
-                if( window.innerWidth >= 992) 
-                    backgroundImageClass = "home--desktop-evening";
-                else if( (window.innerWidth >= 501) && (window.innerWidth < 992)) 
-                    backgroundImageClass = "home--tablet-evening";
-                else
-                    backgroundImageClass = "home--evening";
+            if(homeRef.current) {
+                if(hourRef.current !== date.getHours()) {
+                    homeRef.current.classList.remove(timeRef.current);
+    
+                    if((date.getHours() >= 0) && (date.getHours() < 18)) {
+                        homeRef.current.classList.add('home--daytime');
+                        timeRef.current = 'home--daytime';
+                        homeGreetingIconRef.current.classList.remove('home__greeting--evening');
+                    } else {
+                        homeRef.current.classList.add('home--nighttime');
+                        timeRef.current = 'home--nighttime';
+                        homeGreetingIconRef.current.classList.add('home__greeting--evening');
+                    }
+                    getGreetingText(date.getHours());
+                    hourRef.current = date.getHours();
+                }
             }
-        
-        return backgroundImageClass;
-    }
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [ getGreetingText ]);
 
-    const getHomeAddress = () => {
+    const getHomeAddress = useCallback(() => {
         let homeAddress = '';
 
         if(memorizedCurrentTime.timezone) {
@@ -135,16 +116,10 @@ const Home = () => {
         }
 
         return homeAddress;
-    };
+    }, [ location, memorizedCurrentTime ]);
 
 
     useEffect(() => {
-        const controlUserLocalTime = setInterval(() => {
-            fetchData('https://freegeoip.app/json/')
-                .then(res => setLocation(l => res))
-                .catch(console.log);
-        }, 10000000);
-
         fetchData('https://api.quotable.io/quotes?limit=90')
             .then(quotes => {
                 setQuotes(q => quotes.results);
@@ -155,8 +130,6 @@ const Home = () => {
         fetchData('https://freegeoip.app/json/')
             .then(res => setLocation(l => res))
             .catch(console.log);
-        
-        return () => { clearInterval(controlUserLocalTime)}
         }, []
     );
 
@@ -164,7 +137,7 @@ const Home = () => {
         <main>
             <section
                 ref={homeRef}
-                className={`align-scretch flex flex-column justify-between width-100 home ${getBackgroundImageClass()}`}>
+                className={`align-scretch flex flex-column justify-between width-100 home`}>
                 <div ref={homeIntroRef} className="flex justify-between width-100 px-5 home__intro">
                     <div className="home__quote-container">
                         <p ref={quoteRef} className="home__quote"></p>
@@ -183,16 +156,16 @@ const Home = () => {
                     <div className="align-start flex flex-column width-100">
                         <p className="align-center flex uppercase home__greeting">
                             <span
-                                //ref={homeGreetingIconRef}
-                                className={`inline-block bg-contain no-repeat bg-center home__greeting--icon
-                                    ${getGreetingIconClass()}`}>
+                                ref={homeGreetingIconRef}
+                                className={`inline-block bg-contain no-repeat bg-center home__greeting--icon`}>
                             </span>
-                            { getGreetingText() }
+                            <span ref={greetingTextRef}></span>
                         </p>
-                        <time className="home__time">
-                            { getTime() } 
+                       <div>
+                            <time ref={timerRef} className="home__time">
+                            </time>
                             <sub className="uppercase home__time--sub">{ memorizedCurrentTime.abbreviation }</sub>
-                        </time>
+                       </div>
                         <p className="uppercase home__address">
                             { getHomeAddress() }
                         </p>

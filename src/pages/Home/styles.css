@@ -1,5 +1,4 @@
 .home  {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/mobile/bg-image-daytime.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -8,7 +7,11 @@
     padding-top: 2rem;
 }
 
-.home--evening {
+.home--daytime {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/mobile/bg-image-daytime.jpg');
+}
+
+.home--nighttime {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/mobile/bg-image-nighttime.jpg');
 }
 
@@ -118,11 +121,11 @@
 }
 
 @media screen and (min-width: 501px) {
-    .home {
+    .home--daytime {
         background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/tablet/bg-image-daytime.jpg');
     }
 
-    .home--desktop-evening {
+    .home--nighttime {
         background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/tablet/bg-image-nighttime.jpg');
     }
 
@@ -138,11 +141,11 @@
 }
 
 @media screen and (min-width: 992px) {
-    .home {
+    .home--daytime {
         background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/desktop/bg-image-daytime.jpg');
     }
 
-    .home--desktop-evening {
+    .home--nighttime {
         background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../assets/images/desktop/bg-image-nighttime.jpg');
     }
 
